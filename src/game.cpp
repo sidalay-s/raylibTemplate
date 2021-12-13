@@ -28,7 +28,7 @@ void Game::Initialize(Window& Window, int FPS, std::string Title)
     assert(!GetWindowHandle());
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(Window.x, Window.y, Title.c_str());
-    SetTargetFPS(144);
+    SetTargetFPS(FPS);
     SetExitKey(0);
 }
 
@@ -40,6 +40,10 @@ void Game::Tick(Window& Window)
     // Begin Drawing
     BeginDrawing();
     ClearBackground(BLACK);
+
+    // Tick Functions called here
+    Game::Update();
+    Game::Draw();
 
     // End Drawing
     EndDrawing();
@@ -54,8 +58,8 @@ void Game::CheckScreenSizing(Window& Window)
         Window.y = GetScreenHeight();
     }
 
-    // check for alt + enter [FULLSCREN]
-    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+    // check for alt + enter [FULLSCREEN]
+    if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_RIGHT_ALT) || IsKeyDown(KEY_LEFT_ALT)))
     {
         SetFullScreen(Window);
     }
